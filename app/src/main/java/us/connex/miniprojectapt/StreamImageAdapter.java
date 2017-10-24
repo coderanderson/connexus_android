@@ -9,21 +9,23 @@ import android.widget.BaseAdapter;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 /**
  * Created by dranderson on 10/21/17.
  */
 
 public class StreamImageAdapter extends BaseAdapter {
     private Context mContext;
-    private Stream[] streams;
+    private List<Stream> streams;
 
-    public StreamImageAdapter(Context c, Stream[] streams) {
+    public StreamImageAdapter(Context c, List<Stream> streams) {
         mContext = c;
         this.streams = streams;
     }
 
     public int getCount() {
-        return streams.length;
+        return streams.size();
     }
 
     public Object getItem(int position) {
@@ -46,33 +48,13 @@ public class StreamImageAdapter extends BaseAdapter {
         } else {
             imageView = (ImageView) convertView;
         }
-        Picasso.with(mContext).load(streams[position].getCover()).into(imageView);
-
+        Picasso.with(mContext).load(streams.get(position).getCover()).into(imageView);
 
         return imageView;
     }
 
-    public Stream[] getStreams() {
+    public List<Stream> getStreams() {
         return streams;
     }
 
-
-    private String[] mThumbURLs = {
-            "http://dora.missouri.edu/wp-content/uploads/2012/11/guinea-pig-tan.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg"
-    };
 }
