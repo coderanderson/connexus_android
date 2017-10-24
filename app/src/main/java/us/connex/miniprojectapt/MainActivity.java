@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE_0 = "stream name";
     private GridView gridview;
+    private SearchView searchView;
     private StreamImageAdapter imageAdapter;
     StreamService myStreamService;
     private static final String BASE_URL = "https://apt-s17-am79848.appspot.com/";
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        searchView = (SearchView) findViewById(R.id.searchView);
+
         request_streams();
     }
 
