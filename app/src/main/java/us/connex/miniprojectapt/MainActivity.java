@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         searchView = (SearchView) findViewById(R.id.searchView);
-
+        searchView.setIconifiedByDefault(true);
         request_streams();
     }
 
@@ -79,6 +79,12 @@ public class MainActivity extends AppCompatActivity {
 
     public static StreamService getStreamService() {
         return RetrofitClient.getClient(BASE_URL).create(StreamService.class);
+    }
+
+    //this is a test for search view
+    public void searchView(View view) {
+        Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+        startActivity(intent);
     }
 }
 

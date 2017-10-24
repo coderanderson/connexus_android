@@ -56,6 +56,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:background="@color/colorPrimary"
+        android:onClick="searchView"
         android:text="@string/subscribe_stream_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
