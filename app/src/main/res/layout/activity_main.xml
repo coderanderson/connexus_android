@@ -14,6 +14,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:background="@color/colorPrimary"
+        android:onClick="showNearby"
         android:text="@string/nearby_button_name"
         app:layout_constraintBottom_toTopOf="@+id/gridview"
         app:layout_constraintRight_toRightOf="parent"

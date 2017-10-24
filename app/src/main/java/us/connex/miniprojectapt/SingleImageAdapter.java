@@ -25,7 +25,7 @@ public class SingleImageAdapter extends BaseAdapter {
     }
 
     public int getCount() {
-        return 16;
+        return (mThumbURLs.length - 16 * clickTimes < 16 ? mThumbURLs.length - 16 * clickTimes : 16);
     }
 
     public Object getItem(int position) {

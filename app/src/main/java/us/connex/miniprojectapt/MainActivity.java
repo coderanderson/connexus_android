@@ -21,7 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String EXTRA_MESSAGE = "stream name";
+    public static final String EXTRA_MESSAGE_0 = "stream name";
     private GridView gridview;
     private StreamImageAdapter imageAdapter;
     StreamService myStreamService;
@@ -39,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
         getStream();
     }
 
+    public void showNearby(View view) {
+        Intent intent = new Intent(MainActivity.this, ShowNearbyActivity.class);
+        startActivity(intent);
+    }
+
     private void getStream() {
         myStreamService.getViewAll_Obj().enqueue(new Callback<List<ViewAll>>() {
             @Override
@@ -54,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                         Intent intent = new Intent(MainActivity.this, ShowSingleStreamActivity.class);
-                        intent.putExtra(EXTRA_MESSAGE, streams.get(position).getName());
+                        intent.putExtra(EXTRA_MESSAGE_0, streams.get(position).getName());
                         startActivity(intent);
                     }
                 });

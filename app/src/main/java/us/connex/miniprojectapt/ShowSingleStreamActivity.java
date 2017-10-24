@@ -24,7 +24,7 @@ public class ShowSingleStreamActivity extends AppCompatActivity {
         setContentView(R.layout.view_single_stream);
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-        streamName = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        streamName = intent.getStringExtra(MainActivity.EXTRA_MESSAGE_0);
         String message = "View A Stream: " + streamName;
         TextView textView = (TextView) findViewById(R.id.textView);
         textView.setText(message);

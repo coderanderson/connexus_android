@@ -4,32 +4,33 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by dranderson on 10/21/17.
+ * Created by dranderson on 10/24/17.
  */
 
-public class StreamImageAdapter extends BaseAdapter {
-    private List<Stream> streams;
+public class ImageGpsAdaptor extends BaseAdapter {
     private Context mContext;
+    private int clickTimes;
+    private List<ImageWithGps> images;
     private LayoutInflater inflater;
 
-    public StreamImageAdapter(Context c, List<Stream> streams) {
+    public ImageGpsAdaptor(Context c, List<ImageWithGps> images, int clickTimes) {
         mContext = c;
-        this.streams = streams;
+        this.images = images;
+        this.clickTimes = clickTimes;
     }
 
     public int getCount() {
-        return streams.size();
+        return (images.size() - 16 * clickTimes < 16 ? images.size() - 16 * clickTimes : 16);
     }
 
     public Object getItem(int position) {
@@ -45,22 +46,18 @@ public class StreamImageAdapter extends BaseAdapter {
         View gridView = convertView;
         if(gridView == null) {
             inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            gridView = inflater.inflate(R.layout.stream_module, null);
-            gridView.setLayoutParams(new GridView.LayoutParams(270, 270));
+            gridView = inflater.inflate(R.layout.image_gps_module, null);
+            gridView.setLayoutParams(new GridView.LayoutParams(270, 300));
             gridView.setPadding(0, 0, 0, 0);
         }
         ImageView image = (ImageView) gridView.findViewById(R.id.imageView);
         TextView text = (TextView) gridView.findViewById(R.id.textView);
+        TextView text2 = (TextView) gridView.findViewById(R.id.textView2);
 
-        //image.setImageResource(images.get(i));
-        Picasso.with(mContext).load(streams.get(position).getCover()).into(image);
-        text.setText(streams.get(position).getName());
+        Picasso.with(mContext).load(images.get(16 * clickTimes + position).getURL()).into(image);
+        text.setText(images.get(16 * clickTimes + position).getStreamName());
+        text2.setText(images.get(16 * clickTimes + position).getDistance());
 
         return gridView;
     }
-
-    public List<Stream> getStreams() {
-        return streams;
-    }
-
 }
