@@ -21,4 +21,7 @@ public interface StreamService {
 
     @POST("/api/all_streams")
     Call<List<ViewAll>> getViewAll_Obj();
+
+    @POST("/api/all_streams")
+    Call<List<Search>> getSearchResult_Obj(@Query("query") String string);
 }

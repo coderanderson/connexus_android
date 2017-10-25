@@ -29,13 +29,30 @@ public class MainActivity extends AppCompatActivity {
     StreamService myStreamService;
     private static final String BASE_URL = "https://apt-s17-am79848.appspot.com/";
     private List<Stream> streams = new ArrayList<Stream>();
+    private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         searchView = (SearchView) findViewById(R.id.searchView);
         searchView.setIconifiedByDefault(true);
+        context = getApplicationContext();
         request_streams();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(context, "begin search: "+query, Toast.LENGTH_SHORT).show();
+                myStreamService = getStreamService();
+                getStreamSearch(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     public void request_streams() {
@@ -85,6 +102,35 @@ public class MainActivity extends AppCompatActivity {
     public void searchView(View view) {
         Intent intent = new Intent(MainActivity.this, SearchActivity.class);
         startActivity(intent);
+    }
+
+    private void getStreamSearch(final String string) {
+        myStreamService.getSearchResult_Obj(string).enqueue(new Callback<List<Search>>() {
+            @Override
+            public void onResponse(Call<List<Search>> call, Response<List<Search>> response) {
+                List<Search> list = response.body();
+                ArrayList<String> name_list = new ArrayList<>();
+                ArrayList<String> cover_url_list = new ArrayList<>();
+                for(int i = 0;i < list.size();i++) {
+                    name_list.add(list.get(i).getName());
+                    cover_url_list.add(list.get(i).getCoverUrl());
+                }
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                intent.putStringArrayListExtra("name_list", name_list);
+                intent.putStringArrayListExtra("cover_url_list", cover_url_list);
+                intent.putExtra("query", string);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(Call<List<Search>> call, Throwable t) {
+                Log.e("ERROR", t.getMessage());
+            }
+        });
+    }
+
+    public static StreamService getStreamSearchService() {
+        return RetrofitClient.getClient(BASE_URL).create(StreamService.class);
     }
 }
 

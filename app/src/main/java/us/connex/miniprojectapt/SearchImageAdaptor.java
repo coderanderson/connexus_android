@@ -31,7 +31,7 @@ public class SearchImageAdaptor extends BaseAdapter {
     }
 
     public int getCount() {
-        return (mThumbURLs.length - 8 * clickTimes < 8 ? mThumbURLs.length - 8 * clickTimes : 8);
+        return (streams.size() - 8 * clickTimes < 8 ? streams.size() - 8 * clickTimes : 8);
     }
 
     public Object getItem(int position) {
@@ -55,8 +55,8 @@ public class SearchImageAdaptor extends BaseAdapter {
         TextView text = (TextView) gridView.findViewById(R.id.textView);
 
         //image.setImageResource(images.get(i));
-        Picasso.with(mContext).load(mThumbURLs[position]).into(image);
-        text.setText("hahaha");
+        Picasso.with(mContext).load(streams.get(position).getCover()).into(image);
+        text.setText(streams.get(position).getName());
 
         return gridView;
     }
@@ -65,55 +65,6 @@ public class SearchImageAdaptor extends BaseAdapter {
         return streams;
     }
 
-    private String[] mThumbURLs = {
-            "http://dora.missouri.edu/wp-content/uploads/2012/11/guinea-pig-tan.jpg",
-            "http://dora.missouri.edu/wp-content/uploads/2012/11/guinea-pig-tan.jpg",
-            "http://dora.missouri.edu/wp-content/uploads/2012/11/guinea-pig-tan.jpg",
-            "http://dora.missouri.edu/wp-content/uploads/2012/11/guinea-pig-tan.jpg",
-            "http://dora.missouri.edu/wp-content/uploads/2012/11/guinea-pig-tan.jpg",
-            "http://dora.missouri.edu/wp-content/uploads/2012/11/guinea-pig-tan.jpg",
-            "http://dora.missouri.edu/wp-content/uploads/2012/11/guinea-pig-tan.jpg",
-            "http://dora.missouri.edu/wp-content/uploads/2012/11/guinea-pig-tan.jpg",
-            "http://dora.missouri.edu/wp-content/uploads/2012/11/guinea-pig-tan.jpg",
-            "http://dora.missouri.edu/wp-content/uploads/2012/11/guinea-pig-tan.jpg",
-            "http://dora.missouri.edu/wp-content/uploads/2012/11/guinea-pig-tan.jpg",
-            "http://dora.missouri.edu/wp-content/uploads/2012/11/guinea-pig-tan.jpg",
-            "http://dora.missouri.edu/wp-content/uploads/2012/11/guinea-pig-tan.jpg",
-            "http://dora.missouri.edu/wp-content/uploads/2012/11/guinea-pig-tan.jpg",
-            "http://dora.missouri.edu/wp-content/uploads/2012/11/guinea-pig-tan.jpg",
-            "http://dora.missouri.edu/wp-content/uploads/2012/11/guinea-pig-tan.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://static.boredpanda.com/blog/wp-content/uploads/2017/04/BTL_oaxgBCs-png__700.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
-            "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg"
-    };
+
 
 }

@@ -47,7 +47,9 @@ public class ShowSingleStreamActivity extends AppCompatActivity {
     public void seeMoreImages(View view) {
         imageAdapter = new SingleImageAdapter(this, imageURLs, seeMoreClicked);
         gridview.setAdapter(imageAdapter);
-        seeMoreClicked++;
+        if(imageURLs.length > 16 && seeMoreClicked < (imageURLs.length - 1) / 16) {
+            seeMoreClicked++;
+        }
     }
 
     public void imageUpload(View view) {

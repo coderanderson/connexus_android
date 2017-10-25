@@ -66,7 +66,9 @@ public class ShowNearbyActivity extends AppCompatActivity {
     public void seeMoreImages(View view) {
         imageAdapter = new ImageGpsAdaptor(this, images, seeMoreClicked);
         gridview.setAdapter(imageAdapter);
-        seeMoreClicked++;
+        if(images.size() > 16 && seeMoreClicked < (images.size() - 1) / 16) {
+            seeMoreClicked++;
+        }
     }
 
     public void seeStreams(View view) {
