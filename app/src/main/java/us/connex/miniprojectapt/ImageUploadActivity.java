@@ -3,6 +3,7 @@ package us.connex.miniprojectapt;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -22,5 +23,10 @@ public class ImageUploadActivity extends AppCompatActivity {
         streamName = intent.getStringExtra(ShowSingleStreamActivity.EXTRA_MESSAGE);
         TextView textView = (TextView) findViewById(R.id.textView);
         textView.setText("Stream: " + streamName);
+    }
+
+    public void openCamera(View view) {
+        Intent intent = new Intent(this, cameraViewActivity.class);
+        startActivity(intent);
     }
 }

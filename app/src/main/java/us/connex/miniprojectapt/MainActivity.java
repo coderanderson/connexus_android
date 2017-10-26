@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         searchView = (SearchView) findViewById(R.id.searchView);
-        searchView.setIconifiedByDefault(true);
+        searchView.setIconifiedByDefault(false);
         context = getApplicationContext();
         request_streams();
 

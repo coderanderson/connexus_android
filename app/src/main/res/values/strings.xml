@@ -3,4 +3,19 @@
     <string name="nearby_button_name">Nearby</string>
     <string name="subscribe_stream_button">My Subscribed Streams</string>
     <string name="more_pictures_button">More Pictures</string>
+    <string name="not_log_in">Not log in</string>
+    <string name="picture">Take Picture</string>
+    <string name="description_info">Info</string>
+    <string name="request_permission">This sample needs camera permission.</string>
+    <string name="camera_error">This device doesn\'t support Camera2 API.</string>
+    <string name="intro_message">
+        <![CDATA[
+
+
+            This sample demonstrates the basic use of Camera2 API. Check the source code to see how
+            you can display camera preview and take pictures.
+
+
+        ]]>
+    </string>
 </resources>
