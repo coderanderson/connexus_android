@@ -1,4 +1,4 @@
-package us.connex.miniprojectapt;
+package us.connex.miniprojectapt.Adapters;
 
 import android.content.Context;
 import android.view.View;
@@ -9,23 +9,27 @@ import android.widget.BaseAdapter;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
+import static us.connex.miniprojectapt.Model.Constant.BASE_URL;
+
 /**
  * Created by dranderson on 10/21/17.
  */
 
 public class SingleImageAdapter extends BaseAdapter {
     private Context mContext;
-    private String[] imageURLs;
+    private List<String> imageURLs;
     private int clickTimes;
 
-    public SingleImageAdapter(Context c, String[] imageURLs, int clickTimes) {
+    public SingleImageAdapter(Context c, List<String> imageURLs, int clickTimes) {
         mContext = c;
         this.imageURLs = imageURLs;
         this.clickTimes = clickTimes;
     }
 
     public int getCount() {
-        return (mThumbURLs.length - 16 * clickTimes < 16 ? mThumbURLs.length - 16 * clickTimes : 16);
+        return (imageURLs.size() - 16 * clickTimes < 16 ? imageURLs.size() - 16 * clickTimes : 16);
     }
 
     public Object getItem(int position) {
@@ -48,8 +52,8 @@ public class SingleImageAdapter extends BaseAdapter {
         } else {
             imageView = (ImageView) convertView;
         }
-        Picasso.with(mContext).load(mThumbURLs[16 * clickTimes + position]).into(imageView);
-
+        //Picasso.with(mContext).load(mThumbURLs[16 * clickTimes + position]).into(imageView);
+        Picasso.with(mContext).load(BASE_URL + imageURLs.get(16 * clickTimes + position)).into(imageView);
 
         return imageView;
     }

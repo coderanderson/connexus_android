@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="us.connex.miniprojectapt.MainActivity">
+    tools:context="us.connex.miniprojectapt.Activities.ShowStreamsActivity">
 
     <ImageView
         android:id="@+id/imageView"

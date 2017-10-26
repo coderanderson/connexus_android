@@ -1,4 +1,4 @@
-package us.connex.miniprojectapt;
+package us.connex.miniprojectapt.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,12 +10,16 @@ import android.widget.GridView;
 import java.util.ArrayList;
 import java.util.List;
 
+import us.connex.miniprojectapt.Adapters.ImageGpsAdaptor;
+import us.connex.miniprojectapt.R;
+
+import static us.connex.miniprojectapt.Model.Constant.EXTRA_MESSAGE;
+
 /**
  * Created by dranderson on 10/24/17.
  */
 
 public class ShowNearbyActivity extends AppCompatActivity {
-    public static final String EXTRA_MESSAGE = "stream name";
 
     private GridView gridview;
     private ImageGpsAdaptor imageAdapter;
@@ -72,7 +76,7 @@ public class ShowNearbyActivity extends AppCompatActivity {
     }
 
     public void seeStreams(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, ShowStreamsActivity.class);
         startActivity(intent);
     }
 }

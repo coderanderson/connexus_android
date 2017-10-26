@@ -1,4 +1,4 @@
-package us.connex.miniprojectapt;
+package us.connex.miniprojectapt.Remote;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

@@ -1,6 +1,5 @@
-package us.connex.miniprojectapt;
+package us.connex.miniprojectapt.Activities;
 
-import android.content.Intent;
 import android.util.Log;
 
 import java.util.*;
@@ -8,6 +7,11 @@ import java.util.*;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import us.connex.miniprojectapt.Model.ViewAll;
+import us.connex.miniprojectapt.Remote.RetrofitClient;
+import us.connex.miniprojectapt.Remote.StreamService;
+
+import static us.connex.miniprojectapt.Model.Constant.BASE_URL;
 
 /**
  * Created by dranderson on 10/22/17.
@@ -15,8 +19,8 @@ import retrofit2.Response;
 
 public class fetch_all_streams {
     StreamService myStreamService;
-    private static final String BASE_URL = "http://localhost:8080/";
     private List<Stream> streams = new ArrayList<Stream>();
+
     public void request_streams() {
         myStreamService = getStreamService();
         getStream();
