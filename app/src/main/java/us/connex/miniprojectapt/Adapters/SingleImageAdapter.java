@@ -58,7 +58,7 @@ public class SingleImageAdapter extends BaseAdapter {
         return imageView;
     }
 
-
+    /*
     private String[] mThumbURLs = {
             "http://dora.missouri.edu/wp-content/uploads/2012/11/guinea-pig-tan.jpg",
             "http://dora.missouri.edu/wp-content/uploads/2012/11/guinea-pig-tan.jpg",
@@ -109,5 +109,6 @@ public class SingleImageAdapter extends BaseAdapter {
             "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg",
             "https://media.mnn.com/assets/images/2016/07/guineapig-eating-basil.jpg.838x0_q80.jpg"
     };
+    */
 }
 
