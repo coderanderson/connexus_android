@@ -1,4 +1,4 @@
-package us.connex.miniprojectapt;
+package us.connex.miniprojectapt.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,11 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -20,20 +17,30 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import us.connex.miniprojectapt.Model.Search;
+import us.connex.miniprojectapt.Model.ViewAll;
+import us.connex.miniprojectapt.Model.ViewSingle;
+import us.connex.miniprojectapt.R;
+import us.connex.miniprojectapt.Remote.RetrofitClient;
+import us.connex.miniprojectapt.Remote.StreamService;
+import us.connex.miniprojectapt.Adapters.StreamImageAdapter;
 
-public class MainActivity extends AppCompatActivity {
-    public static final String EXTRA_MESSAGE_0 = "stream name";
+import static us.connex.miniprojectapt.Model.Constant.BASE_URL;
+import static us.connex.miniprojectapt.Model.Constant.EXTRA_MESSAGE;
+
+public class ShowStreamsActivity extends AppCompatActivity {
+
     private GridView gridview;
     private SearchView searchView;
     private StreamImageAdapter imageAdapter;
     StreamService myStreamService;
-    private static final String BASE_URL = "https://apt-s17-am79848.appspot.com/";
-    private List<Stream> streams = new ArrayList<Stream>();
+    private List<Stream> streams = new ArrayList<>();
     private Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.streams_view);
         searchView = (SearchView) findViewById(R.id.searchView);
         searchView.setIconifiedByDefault(false);
         context = getApplicationContext();
@@ -42,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(context, "begin search: "+query, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "begin search: " + query, Toast.LENGTH_SHORT).show();
                 myStreamService = getStreamService();
                 getStreamSearch(query);
                 return true;
@@ -61,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showNearby(View view) {
-        Intent intent = new Intent(MainActivity.this, ShowNearbyActivity.class);
+        Intent intent = new Intent(ShowStreamsActivity.this, ShowNearbyActivity.class);
         startActivity(intent);
     }
 
@@ -71,17 +78,17 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<List<ViewAll>> call, Response<List<ViewAll>> response) {
                 List<ViewAll> list = response.body();
                 System.out.println(list.size());
-                for(int i = 0;i < list.size();i++) {
+                for (int i = 0; i < list.size(); i++) {
                     streams.add(new Stream(list.get(i).getName(), list.get(i).getCoverUrl()));
                 }
                 gridview = (GridView) findViewById(R.id.gridview);
-                imageAdapter = new StreamImageAdapter(MainActivity.this, streams);
+                imageAdapter = new StreamImageAdapter(ShowStreamsActivity.this, streams);
                 gridview.setAdapter(imageAdapter);
                 gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                        Intent intent = new Intent(MainActivity.this, ShowSingleStreamActivity.class);
-                        intent.putExtra(EXTRA_MESSAGE_0, streams.get(position).getName());
-                        startActivity(intent);
+                        String streamName = streams.get(position).getName();
+                        myStreamService = getStreamService();
+                        getSingleStream(streamName);
                     }
                 });
             }
@@ -93,14 +100,28 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void getSingleStream(final String string) {
+        myStreamService.getSingleStream_Obj(string).enqueue(new Callback<ViewSingle>() {
+            @Override
+            public void onResponse(Call<ViewSingle> call, Response<ViewSingle> response) {
+                ViewSingle viewsingle = response.body();
+                ArrayList<String> photoUrls = viewsingle.getPhotoUrls();
+                Intent intent = new Intent(ShowStreamsActivity.this, ShowSingleStreamActivity.class);
+                intent.putExtra(EXTRA_MESSAGE, string);
+                intent.putStringArrayListExtra("photo_urls", photoUrls);
+                startActivity(intent);
+            }
 
-    public static StreamService getStreamService() {
-        return RetrofitClient.getClient(BASE_URL).create(StreamService.class);
+            @Override
+            public void onFailure(Call<ViewSingle> call, Throwable t) {
+
+            }
+        });
     }
 
     //this is a test for search view
     public void searchView(View view) {
-        Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+        Intent intent = new Intent(ShowStreamsActivity.this, SearchActivity.class);
         startActivity(intent);
     }
 
@@ -111,13 +132,15 @@ public class MainActivity extends AppCompatActivity {
                 List<Search> list = response.body();
                 ArrayList<String> name_list = new ArrayList<>();
                 ArrayList<String> cover_url_list = new ArrayList<>();
-                for(int i = 0;i < list.size();i++) {
-                    name_list.add(list.get(i).getName());
-                    cover_url_list.add(list.get(i).getCoverUrl());
+                Intent intent = new Intent(ShowStreamsActivity.this, SearchActivity.class);
+                if(list != null) {
+                    for (int i = 0; i < list.size(); i++) {
+                        name_list.add(list.get(i).getName());
+                        cover_url_list.add(list.get(i).getCoverUrl());
+                    }
+                    intent.putStringArrayListExtra("name_list", name_list);
+                    intent.putStringArrayListExtra("cover_url_list", cover_url_list);
                 }
-                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-                intent.putStringArrayListExtra("name_list", name_list);
-                intent.putStringArrayListExtra("cover_url_list", cover_url_list);
                 intent.putExtra("query", string);
                 startActivity(intent);
             }
@@ -129,8 +152,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public static StreamService getStreamSearchService() {
+    public static StreamService getStreamService() {
         return RetrofitClient.getClient(BASE_URL).create(StreamService.class);
     }
 }
-

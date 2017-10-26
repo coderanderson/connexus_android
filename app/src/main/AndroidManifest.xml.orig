@@ -2,11 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="us.connex.miniprojectapt">
 
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+=======
+    <uses-permission android:name="android.permission.INTERNET" />
+>>>>>>> 51eeae12ef9594ae3ec79d9d02d814dd062e56d4
 
     <application
         android:allowBackup="true"
@@ -15,6 +19,56 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< HEAD
+        <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity"
+            android:parentActivityName=".LoginActivity" >
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LoginActivity" />
+        </activity>
+        <activity android:name=".ShowSingleStreamActivity"
+            android:parentActivityName=".LoginActivity" >
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LoginActivity" />
+        </activity>
+        <activity android:name=".ImageUploadActivity"
+            android:parentActivityName=".LoginActivity" >
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LoginActivity" />
+        </activity>
+        <activity android:name=".ShowNearbyActivity"
+            android:parentActivityName=".LoginActivity" >
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LoginActivity" />
+        </activity>
+        <activity android:name=".SearchActivity"
+            android:parentActivityName=".LoginActivity" >
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LoginActivity" />
+        </activity>
+        <activity android:name=".cameraViewActivity"
+            android:parentActivityName=".LoginActivity" >
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LoginActivity" />
+=======
         <activity android:name=".Activities.ShowStreamsActivity"></activity>
         <activity
             android:name=".Activities.ShowSingleStreamActivity"
@@ -58,15 +112,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+>>>>>>> 51eeae12ef9594ae3ec79d9d02d814dd062e56d4
         </activity>
-        <activity android:name=".cameraViewActivity"
-            android:parentActivityName=".LoginActivity" >
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LoginActivity" />
-        </activity>
+        <activity android:name=".Activities.LoginActivity"></activity>
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

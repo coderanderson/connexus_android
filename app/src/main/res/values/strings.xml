@@ -3,7 +3,11 @@
     <string name="nearby_button_name">Nearby</string>
     <string name="subscribe_stream_button">My Subscribed Streams</string>
     <string name="more_pictures_button">More Pictures</string>
-    <string name="not_log_in">Not log in</string>
+    <string name="log_out">Log Out</string>
+    <string name="revoke">Revoke</string>
+    <string name="not_close_session">No se pudo cerrar sesión</string>
+    <string name="not_revoke">No se pudo revocar el acceso</string>
+    <string name="not_log_in">You should log in first!</string>
     <string name="picture">Take Picture</string>
     <string name="description_info">Info</string>
     <string name="request_permission">This sample needs camera permission.</string>

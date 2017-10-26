@@ -1,35 +1,40 @@
-package us.connex.miniprojectapt;
+package us.connex.miniprojectapt.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import us.connex.miniprojectapt.Activities.Stream;
+import us.connex.miniprojectapt.R;
+
 /**
- * Created by dranderson on 10/21/17.
+ * Created by dranderson on 10/24/17.
  */
 
-public class StreamImageAdapter extends BaseAdapter {
+
+public class SearchImageAdaptor extends BaseAdapter {
     private List<Stream> streams;
     private Context mContext;
     private LayoutInflater inflater;
+    private int clickTimes;
 
-    public StreamImageAdapter(Context c, List<Stream> streams) {
+    public SearchImageAdaptor(Context c, List<Stream> streams, int clickTimes) {
         mContext = c;
         this.streams = streams;
+        this.clickTimes = clickTimes;
     }
 
     public int getCount() {
-        return streams.size();
+        return (streams.size() - 8 * clickTimes < 8 ? streams.size() - 8 * clickTimes : 8);
     }
 
     public Object getItem(int position) {
@@ -62,5 +67,7 @@ public class StreamImageAdapter extends BaseAdapter {
     public List<Stream> getStreams() {
         return streams;
     }
+
+
 
 }

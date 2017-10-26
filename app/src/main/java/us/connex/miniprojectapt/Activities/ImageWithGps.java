@@ -1,4 +1,4 @@
-package us.connex.miniprojectapt;
+package us.connex.miniprojectapt.Activities;
 
 /**
  * Created by dranderson on 10/24/17.
