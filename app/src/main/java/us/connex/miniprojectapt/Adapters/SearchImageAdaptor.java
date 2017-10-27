@@ -58,7 +58,7 @@ public class SearchImageAdaptor extends BaseAdapter {
         TextView text = (TextView) gridView.findViewById(R.id.textView);
 
         //image.setImageResource(images.get(i));
-        Picasso.with(mContext).load(streams.get(position).getCover()).into(image);
+        Picasso.with(mContext).load(streams.get(position).getCover()).resize(100,100).centerInside().into(image);
         text.setText(streams.get(position).getName());
 
         return gridView;

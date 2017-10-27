@@ -53,7 +53,7 @@ public class SingleImageAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
         //Picasso.with(mContext).load(mThumbURLs[16 * clickTimes + position]).into(imageView);
-        Picasso.with(mContext).load(BASE_URL + imageURLs.get(16 * clickTimes + position)).into(imageView);
+        Picasso.with(mContext).load(BASE_URL + imageURLs.get(16 * clickTimes + position)).resize(100,100).centerInside().into(imageView);
 
         return imageView;
     }
