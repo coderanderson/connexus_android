@@ -107,6 +107,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             @Override
             public void onResponse(Call<List<ViewAll>> call, Response<List<ViewAll>> response) {
                 List<ViewAll> list = response.body();
+                if(list == null)
+                {
+                    Toast.makeText(MainActivity.this, "No any streams!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 ArrayList<String> nameList = new ArrayList<>();
                 ArrayList<String> coverUrlList = new ArrayList<>();
                 for(int i = 0;i < list.size();i++) {

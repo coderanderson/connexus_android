@@ -63,12 +63,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".cameraViewActivity"
-            android:parentActivityName=".LoginActivity" >
+            android:parentActivityName=".Activities.LoginActivity" >
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LoginActivity" />
+                android:value=".Activities.LoginActivity" />
         </activity>
+        <activity android:name=".Activities.LoginActivity"></activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 
