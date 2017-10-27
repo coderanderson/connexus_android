@@ -1,23 +1,23 @@
 package us.connex.miniprojectapt.Remote;
-
-/**
- * Created by dranderson on 10/24/17.
- */
-
 import java.util.List;
+import java.util.Map;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
+import us.connex.miniprojectapt.Model.ByteMessage;
 import us.connex.miniprojectapt.Model.Search;
+import us.connex.miniprojectapt.Model.UploadPhoto;
+import us.connex.miniprojectapt.Model.UploadSession;
 import us.connex.miniprojectapt.Model.ViewAll;
 import us.connex.miniprojectapt.Model.ViewNearby;
 import us.connex.miniprojectapt.Model.ViewSingle;
-
-/**
- * Created by cmk on 2017/10/21.
- */
 
 public interface StreamService {
 
@@ -35,4 +35,11 @@ public interface StreamService {
                                        @Query("lon") double lon,
                                        @Query("All") int All);
 
+
+    @POST("/api/upload_photo")
+    Call<UploadSession> uploadPhotoSession_Obj();
+
+    @POST
+    Call<UploadPhoto> uploadPhoto_Obj(@Url String uploadUrl, @Part("file") ByteMessage image,
+            @Part("stream_name") String streamName, @Part("lat") String lat, @Part("lon") String lon);
 }
