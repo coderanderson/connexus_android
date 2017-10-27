@@ -1,5 +1,6 @@
 package us.connex.miniprojectapt.Activities;
 
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -34,6 +35,7 @@ import static us.connex.miniprojectapt.Model.Constant.SIGN_IN_CODE;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
+    private final String AUTH_LOG_TAG = "auth";
     private GoogleApiClient googleApiClient;
     private SignInButton signInButton;
     private Button viewStreams;
@@ -43,17 +45,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupAuthApi();
+        setupLayout();
+    }
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        googleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-
-        signInButton = (SignInButton) findViewById(R.id.signInButton);
+    private void setupLayout() {
+        signInButton = findViewById(R.id.signInButton);
         signInButton.setSize(SignInButton.SIZE_WIDE);
         signInButton.setColorScheme(SignInButton.COLOR_DARK);
 
@@ -66,9 +63,20 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         });
     }
 
+    private void setupAuthApi() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+    }
+
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        Log.e(AUTH_LOG_TAG, "could not connect to google auth api");
     }
 
     @Override
@@ -91,13 +99,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private void goMainScreen() {
         Intent intent = new Intent(this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+            Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
-    //Call when click viewStreams button
     public void sendMessage(View view) {
-        viewStreams = (Button) findViewById(R.id.viewStreams);
+        viewStreams = findViewById(R.id.viewStreams);
         myStreamService = getStreamService();
         getStream();
     }
@@ -106,11 +114,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         myStreamService.getViewAll_Obj().enqueue(new Callback<List<ViewAll>>() {
             @Override
             public void onResponse(Call<List<ViewAll>> call, Response<List<ViewAll>> response) {
+                Intent intent = getStreamActivityIntent(response);
+                if (intent == null) return;
+                startActivity(intent);
+            }
+
+            @Nullable
+            private Intent getStreamActivityIntent(Response<List<ViewAll>> response) {
                 List<ViewAll> list = response.body();
                 if(list == null)
                 {
                     Toast.makeText(MainActivity.this, "No any streams!", Toast.LENGTH_LONG).show();
-                    return;
+                    return null;
                 }
                 ArrayList<String> nameList = new ArrayList<>();
                 ArrayList<String> coverUrlList = new ArrayList<>();
@@ -121,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 Intent intent = new Intent(MainActivity.this, ShowStreamsActivity.class);
                 intent.putStringArrayListExtra("name_list", nameList);
                 intent.putStringArrayListExtra("cover_url_list", coverUrlList);
-                startActivity(intent);
+                return intent;
             }
 
             @Override
