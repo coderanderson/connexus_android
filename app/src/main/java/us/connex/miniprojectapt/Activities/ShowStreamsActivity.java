@@ -43,7 +43,7 @@ public class ShowStreamsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.streams_view);
         searchView = (SearchView) findViewById(R.id.searchView);
-        searchView.setIconifiedByDefault(true);
+        searchView.setIconifiedByDefault(false);
         context = getApplicationContext();
         request_streams();
 
