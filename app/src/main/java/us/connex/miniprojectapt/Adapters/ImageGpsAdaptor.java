@@ -57,7 +57,7 @@ public class ImageGpsAdaptor extends BaseAdapter {
         TextView text = (TextView) gridView.findViewById(R.id.textView);
         TextView text2 = (TextView) gridView.findViewById(R.id.textView2);
 
-        Picasso.with(mContext).load(images.get(16 * clickTimes + position).getURL()).into(image);
+        Picasso.with(mContext).load(images.get(16 * clickTimes + position).getURL()).resize(50,50).into(image);
         text.setText(images.get(16 * clickTimes + position).getStreamName());
         text2.setText(images.get(16 * clickTimes + position).getDistance());
 
