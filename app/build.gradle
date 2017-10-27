@@ -34,3 +34,4 @@ dependencies {
     compile 'com.github.d-max:spots-dialog:0.7@aar'
     testCompile 'junit:junit:4.12'
 }
+apply plugin: 'com.google.gms.google-services'

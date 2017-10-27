@@ -16,4 +16,7 @@ public class ImageWithGps {
     public String getURL() { return imageURL; }
     public String getStreamName() { return streamName; }
     public String getDistance() { return distance; }
+    public Double getDoubleDistance() {
+        return Double.parseDouble(distance);
+    }
 }

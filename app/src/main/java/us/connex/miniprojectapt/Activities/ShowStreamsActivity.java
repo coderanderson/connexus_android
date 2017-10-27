@@ -17,6 +17,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import us.connex.miniprojectapt.Model.PhotoLocationes;
 import us.connex.miniprojectapt.Model.Search;
 import us.connex.miniprojectapt.Model.ViewAll;
 import us.connex.miniprojectapt.Model.ViewSingle;
@@ -33,7 +34,7 @@ public class ShowStreamsActivity extends AppCompatActivity {
     private GridView gridview;
     private SearchView searchView;
     private StreamImageAdapter imageAdapter;
-    StreamService myStreamService;
+    private StreamService myStreamService;
     private List<Stream> streams = new ArrayList<>();
     private Context context;
 
@@ -69,6 +70,10 @@ public class ShowStreamsActivity extends AppCompatActivity {
 
     public void showNearby(View view) {
         Intent intent = new Intent(ShowStreamsActivity.this, ShowNearbyActivity.class);
+        ArrayList<String> allStreamNames = new ArrayList<>();
+        for(int i = 0;i < streams.size();i++)
+            allStreamNames.add(streams.get(i).getName());
+        intent.putStringArrayListExtra("all_stream_names", allStreamNames);
         startActivity(intent);
     }
 
@@ -77,7 +82,6 @@ public class ShowStreamsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<ViewAll>> call, Response<List<ViewAll>> response) {
                 List<ViewAll> list = response.body();
-                System.out.println(list.size());
                 for (int i = 0; i < list.size(); i++) {
                     streams.add(new Stream(list.get(i).getName(), list.get(i).getCoverUrl()));
                 }
