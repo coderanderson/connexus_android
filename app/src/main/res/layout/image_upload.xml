@@ -27,6 +27,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:background="@android:color/holo_orange_dark"
+        android:onClick="takePhotoAndUpload"
         android:text="  Use camera  "
         android:textColor="@android:color/background_light"
         app:layout_constraintLeft_toLeftOf="parent"
