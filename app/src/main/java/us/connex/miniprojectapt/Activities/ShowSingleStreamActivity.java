@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import us.connex.miniprojectapt.R;
 import us.connex.miniprojectapt.Adapters.SingleImageAdapter;
 
+import static us.connex.miniprojectapt.Model.Constant.BASE_URL;
 import static us.connex.miniprojectapt.Model.Constant.EXTRA_MESSAGE;
 
 /**
@@ -35,6 +36,7 @@ public class ShowSingleStreamActivity extends AppCompatActivity {
         streamName = intent.getStringExtra(EXTRA_MESSAGE);
         imageURLs = intent.getStringArrayListExtra("photo_urls");
         String message = "View A Stream: " + streamName;
+        System.out.println(imageURLs.get(0));
         TextView textView = (TextView) findViewById(R.id.textView);
         textView.setText(message);
         gridview = (GridView) findViewById(R.id.gridview);

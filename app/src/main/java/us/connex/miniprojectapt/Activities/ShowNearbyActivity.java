@@ -24,7 +24,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import us.connex.miniprojectapt.Adapters.ImageGpsAdaptor;
 import us.connex.miniprojectapt.Model.GPStracker;
+import us.connex.miniprojectapt.Model.Photo;
 import us.connex.miniprojectapt.Model.PhotoLocationes;
+import us.connex.miniprojectapt.Model.ViewNearby;
 import us.connex.miniprojectapt.Model.ViewSingle;
 import us.connex.miniprojectapt.R;
 import us.connex.miniprojectapt.Remote.RetrofitClient;
@@ -54,31 +56,6 @@ public class ShowNearbyActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(ShowNearbyActivity.this,new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},123);
 
         getAllImages();
-
-        //TODO: request nearby images from server, sending local coordinate
-        //image placeholders:
-
-        /*images.add(new ImageWithGps("https://d3jkudlc7u70kh.cloudfront.net/interesting-guinea-pig-behavior-fact.jpg", "pig1", "1"));
-        images.add(new ImageWithGps("https://d3jkudlc7u70kh.cloudfront.net/interesting-guinea-pig-behavior-fact.jpg", "pig2", "1"));
-        images.add(new ImageWithGps("https://d3jkudlc7u70kh.cloudfront.net/interesting-guinea-pig-behavior-fact.jpg", "pig2", "1"));
-        images.add(new ImageWithGps("https://d3jkudlc7u70kh.cloudfront.net/interesting-guinea-pig-behavior-fact.jpg", "pig2", "1"));
-        images.add(new ImageWithGps("https://d3jkudlc7u70kh.cloudfront.net/interesting-guinea-pig-behavior-fact.jpg", "pig2", "1"));
-        images.add(new ImageWithGps("https://d3jkudlc7u70kh.cloudfront.net/interesting-guinea-pig-behavior-fact.jpg", "pig2", "1"));
-        images.add(new ImageWithGps("https://d3jkudlc7u70kh.cloudfront.net/interesting-guinea-pig-behavior-fact.jpg", "pig2", "1"));
-        images.add(new ImageWithGps("https://d3jkudlc7u70kh.cloudfront.net/interesting-guinea-pig-behavior-fact.jpg", "pig2", "1"));
-        images.add(new ImageWithGps("https://d3jkudlc7u70kh.cloudfront.net/interesting-guinea-pig-behavior-fact.jpg", "pig2", "1"));
-        images.add(new ImageWithGps("https://d3jkudlc7u70kh.cloudfront.net/interesting-guinea-pig-behavior-fact.jpg", "pig2", "1"));
-        images.add(new ImageWithGps("https://d3jkudlc7u70kh.cloudfront.net/interesting-guinea-pig-behavior-fact.jpg", "pig2", "1"));
-        images.add(new ImageWithGps("https://d3jkudlc7u70kh.cloudfront.net/interesting-guinea-pig-behavior-fact.jpg", "pig2", "1"));
-        images.add(new ImageWithGps("https://d3jkudlc7u70kh.cloudfront.net/interesting-guinea-pig-behavior-fact.jpg", "pig2", "1"));
-        images.add(new ImageWithGps("https://upload.wikimedia.org/wikipedia/commons/0/00/Two_adult_Guinea_Pigs_%28Cavia_porcellus%29.jpg", "pig2", "1"));
-        images.add(new ImageWithGps("https://upload.wikimedia.org/wikipedia/commons/0/00/Two_adult_Guinea_Pigs_%28Cavia_porcellus%29.jpg", "pig2", "1"));
-        images.add(new ImageWithGps("https://upload.wikimedia.org/wikipedia/commons/0/00/Two_adult_Guinea_Pigs_%28Cavia_porcellus%29.jpg", "pig2", "1"));
-        images.add(new ImageWithGps("https://upload.wikimedia.org/wikipedia/commons/0/00/Two_adult_Guinea_Pigs_%28Cavia_porcellus%29.jpg", "pig2", "1"));
-        images.add(new ImageWithGps("https://upload.wikimedia.org/wikipedia/commons/0/00/Two_adult_Guinea_Pigs_%28Cavia_porcellus%29.jpg", "pig2", "1"));
-        images.add(new ImageWithGps("https://upload.wikimedia.org/wikipedia/commons/0/00/Two_adult_Guinea_Pigs_%28Cavia_porcellus%29.jpg", "pig2", "1"));
-        images.add(new ImageWithGps("https://upload.wikimedia.org/wikipedia/commons/0/00/Two_adult_Guinea_Pigs_%28Cavia_porcellus%29.jpg", "pig2", "1"));
-        */
 
         gridview = (GridView) findViewById(R.id.gridview);
         imageAdapter = new ImageGpsAdaptor(this, images, seeMoreClicked);
@@ -122,69 +99,51 @@ public class ShowNearbyActivity extends AppCompatActivity {
     }
 
     public void getAllImages() {
-        Intent intent = getIntent();
-        ArrayList<String> allStreamNames = intent.getStringArrayListExtra("all_stream_names");
         myStreamService = getStreamService();
-        getStreamData(allStreamNames);
+        getStreamData();
     }
 
-    private void getStreamData(final ArrayList<String> allStreamNames) {
-        if(allStreamNames == null)
-            return;
-        //images = new ArrayList<>();
-        for(int i = 0;i < allStreamNames.size();i++) {
-            final String streamName = allStreamNames.get(i);
-            myStreamService.getSingleStream_Obj(streamName).enqueue(new Callback<ViewSingle>() {
-                @Override
-                public void onResponse(Call<ViewSingle> call, Response<ViewSingle> response) {
-                    ViewSingle viewsingle = response.body();
-                    ArrayList<PhotoLocationes> photoLocation = viewsingle.getPhotoLocationses();
-                    ArrayList<String> photoUrls = viewsingle.getPhotoUrls();
-                    if(photoLocation == null)
-                        return;
-                    for(int j = 0;j < photoLocation.size();j++) {
-                        String distance = distanceCalculate(photoLocation.get(j).getLat(), photoLocation.get(j
-                        ).getLon());
-                        System.out.println(distance);
-                        images.add(new ImageWithGps(BASE_URL+photoUrls.get(j),streamName,distance));
-                    }
-                    Collections.sort(images, new Comparator<ImageWithGps>() {
-                        @Override
-                        public int compare(ImageWithGps imageWithGps, ImageWithGps t1) {
-                            return imageWithGps.getDoubleDistance().compareTo(t1.getDoubleDistance());
-                        }
-                    });
-                    streamNumber = streamNumber + 1;
-                    if(streamNumber == allStreamNames.size())
-                        gridview.setAdapter(imageAdapter);
-                }
-
-                @Override
-                public void onFailure(Call<ViewSingle> call, Throwable t) {
-
-                }
-            });
-        }
-    }
-
-    private String distanceCalculate(double lat, double lon) {
+    private void getStreamData() {
         GPStracker gpstracker = new GPStracker(getApplicationContext());
         Location location = gpstracker.getLocation();
         double latLocal = 0;
         double lonLocal = 0;
-        lat = lat*Math.PI/180.0;
-        lon = lon*Math.PI/180.0;
-        if(location != null) {
-            latLocal = location.getLatitude()*Math.PI/180.0;
-            lonLocal = location.getLongitude()*Math.PI/180.0;
+        if (location != null) {
+            latLocal = location.getLatitude();
+            lonLocal = location.getLongitude();
         }
-        double haversine = Math.pow(Math.sin((latLocal-lat)/2.0),2)+Math.cos(lat)*Math.cos(latLocal)*Math.pow(Math.sin((lonLocal-lon)/2.0),2);
-        double c = 2*Math.atan2(Math.sqrt(haversine), Math.sqrt(1-haversine));
-        //System.out.println(c);
-        DecimalFormat df = new DecimalFormat("0.00");
-        return df.format(EARTH_RADIUS*c);
-    }
+        else {
+            Toast.makeText(ShowNearbyActivity.this, "GPS not available.\nLocation set to (0,0).",Toast.LENGTH_LONG).show();
+        }
+        ViewNearby viewNearby = new ViewNearby(1, latLocal, lonLocal);
+        myStreamService.getNearbyData_Obj(latLocal, lonLocal, 1).enqueue(new Callback<ViewNearby>() {
+            @Override
+            public void onResponse(Call<ViewNearby> call, Response<ViewNearby> response) {
+                ViewNearby viewNearby = response.body();
+                if(viewNearby == null)
+                    return;
+                for(int i = 0;i < viewNearby.getPhotos().size();i++) {
+                    double distance = viewNearby.getPhotos().get(i).getDistance()/1000;
+                    DecimalFormat df = new DecimalFormat("0.00");
+                    String distance_str = df.format(distance);
+                    images.add(new ImageWithGps(viewNearby.getPhotos().get(i).getPhotoUrl(), viewNearby.getPhotos().get(i).getStreamName(),
+                            distance_str));
+                }
+                Collections.sort(images, new Comparator<ImageWithGps>() {
+                    @Override
+                    public int compare(ImageWithGps imageWithGps, ImageWithGps t1) {
+                        return imageWithGps.getDoubleDistance().compareTo(t1.getDoubleDistance());
+                    }
+                });
+                gridview.setAdapter(imageAdapter);
+            }
 
+            @Override
+            public void onFailure(Call<ViewNearby> call, Throwable t) {
+
+            }
+        });
+    }
 
     public void seeMoreImages(View view) {
         imageAdapter = new ImageGpsAdaptor(this, images, seeMoreClicked);

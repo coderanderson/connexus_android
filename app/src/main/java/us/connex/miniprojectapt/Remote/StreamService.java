@@ -7,10 +7,12 @@ package us.connex.miniprojectapt.Remote;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import us.connex.miniprojectapt.Model.Search;
 import us.connex.miniprojectapt.Model.ViewAll;
+import us.connex.miniprojectapt.Model.ViewNearby;
 import us.connex.miniprojectapt.Model.ViewSingle;
 
 /**
@@ -27,4 +29,10 @@ public interface StreamService {
 
     @POST("/api/view")
     Call<ViewSingle> getSingleStream_Obj(@Query("stream_name") String string);
+
+    @POST("/api/nearby_photo")
+    Call<ViewNearby> getNearbyData_Obj(@Query("lat") double lat,
+                                       @Query("lon") double lon,
+                                       @Query("All") int All);
+
 }
